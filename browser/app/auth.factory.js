@@ -1,14 +1,24 @@
 'use strict';
 
 app.factory('Auth', function($http){
-	function logNewUser(newUserData){
-		return $http({
-			method: "POST", 
-			url: url,
-			data: newUserData
-		})
+	function signUp(newUserInfo){
+		return $http.post('/api/users', newUserInfo)
 		.then(function(res){
-			return 
+			alert('Account created with e-mail: '+res.data.email+'!');
+			return res.data
+		});
+	}
+
+	function login(userInfo){
+		console.log(userInfo)
+		return $http.post('/api/users/login', userInfo)
+		.then(function(res){
+			console.log(res);
 		})
+	}
+
+	return {
+		signUp: signUp,
+		login: login
 	}
 })

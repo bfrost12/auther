@@ -32,6 +32,21 @@ router.post('/', function (req, res, next) {
 	.then(null, next);
 });
 
+router.post('/login', function (req, res, next){
+	User.find({email: req.body.email}).then(function(user){
+		console.log(user);
+		if (user[0].password === req.body.password) {
+			res.status(200).send('Right Password!')
+		}
+		else {
+			res.status(401).send('Wrong Password!')
+		}
+	}).catch(function(err){
+		console.log(err);
+		res.send('No user with that e-mail address exists.')
+	})
+})
+
 router.get('/:id', function (req, res, next) {
 	req.requestedUser.getStories()
 	.then(function (stories) {

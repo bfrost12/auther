@@ -36,6 +36,8 @@ router.post('/login', function (req, res, next){
 	User.find({email: req.body.email}).then(function(user){
 		console.log(user);
 		if (user[0].password === req.body.password) {
+			req.session.userid = user[0]._id;
+			req.session.username = user[0].name;
 			res.status(200).send('Right Password!')
 		}
 		else {
@@ -45,6 +47,12 @@ router.post('/login', function (req, res, next){
 		console.log(err);
 		res.send('No user with that e-mail address exists.')
 	})
+})
+
+router.put('/logout', function (req, res, next){
+	req.session.userid = null;
+	req.session.username = null;
+	res.send("Logged Out");
 })
 
 router.get('/:id', function (req, res, next) {

@@ -2,6 +2,23 @@
 
 var app = require('express')();
 var path = require('path');
+var session = require('express-session');
+
+app.use(session({
+	secret: 'bryceiscool'
+}))
+
+/*app.use(function(req, res, next){
+	if(!req.session.counter) req.session.counter = 0;
+	console.log('counter', ++req.session.counter);
+	next();
+});*/
+
+app.use(function(req, res, next){
+	if(req.session.userid)
+		console.log(req.session.username)
+	next();
+})
 
 app.use(require('./logging.middleware'));
 

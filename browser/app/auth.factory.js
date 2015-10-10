@@ -10,15 +10,23 @@ app.factory('Auth', function($http){
 	}
 
 	function login(userInfo){
-		console.log(userInfo)
 		return $http.post('/api/users/login', userInfo)
 		.then(function(res){
 			console.log(res);
 		})
 	}
 
+	function logout() {
+		return $http.put('/api/users/logout').then(function(res){
+			console.log(res);
+		})	
+	}
+
 	return {
 		signUp: signUp,
-		login: login
+		login: login,
+		logout: logout
 	}
+
+
 })
